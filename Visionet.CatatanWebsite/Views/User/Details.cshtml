@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Visionet.CatatanWebsite.Models.Catatan>
+
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<table class="table" id="myTable">
+    <tr>
+        <th>
+            Catatan
+        </th>
+        <th>
+            Tanggal Dibuat
+        </th>
+        
+        <th></th>
+
+    </tr>
+</table>
+
+<script>
+    function getCatatan() {
+        $.ajax({
+            url: '/Catatan/GetCatatanJsonByUserId',
+            data: {
+                userId: 2
+            },
+            dataType: 'json',
+            method: 'get'
+        }).then(function (hasil) {
+            $('#myTable tbody').empty();
+
+            $.each(hasil, function (i, item) {
+                console.log(item);
+                var rows = "<tr>" + "<td>" + item.CatatanName + "</td>" + "<td>" + new Date(parseInt(item.TanggalCreate.substr(6))) + "</td>" + "</tr>";
+                $('#myTable tbody').append(rows);
+            });
+        })
+    }
+</script>
+
